@@ -1,8 +1,10 @@
-module finance-tracker
+module github.com/hreynier/finance-tracker
 
 go 1.24.4
 
 require github.com/charmbracelet/bubbletea v1.3.5
+
+require github.com/shopspring/decimal v1.4.0
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect

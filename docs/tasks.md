@@ -38,11 +38,11 @@ finance-tracker/
 ---
 
 ### Task 1.2: Data Models Definition
-- [ ] Define `Transaction` struct (ID, Amount, Description, Category, Date, Type)
-- [ ] Define `Config` struct (Currency, DateFormat, Categories, UserName)
-- [ ] Create enums/constants for transaction types (Income/Expense)
-- [ ] Add JSON tags for serialization and validation tags
-- [ ] Implement String() methods for display formatting
+- [x] Define `Transaction` struct (ID, Amount, Description, Category, Date, Type)
+- [x] Define `Config` struct (Currency, DateFormat, Categories, UserName)
+- [x] Create enums/constants for transaction types (Income/Expense)
+- [x] Add JSON tags for serialization and validation tags
+- [x] Implement String() methods for display formatting
 
 **Dependencies**: Task 1.1
 

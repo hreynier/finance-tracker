@@ -5,6 +5,8 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/hreynier/finance-tracker/internal/config"
+	"github.com/hreynier/finance-tracker/internal/models"
 )
 
 type model struct {
@@ -47,6 +49,17 @@ func (m model) View() string {
 }
 
 func main() {
+	cfg := config.Config{}
+	txn := models.Transaction{}
+
+	fmt.Println("Config: %w", cfg)
+	fmt.Println("Transactions: %w", txn)
+
+	transaction, err := models.NewExpense("25.567", "Coffee At Starbucks", "Food & Drink")
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+	}
+	fmt.Println(transaction)
 	p := tea.NewProgram(model{})
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error: %v", err)
