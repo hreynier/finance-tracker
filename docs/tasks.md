@@ -13,15 +13,14 @@ A command-line finance tracking application built with Go and Bubbletea, featuri
 ```
 finance-tracker/
 ├── cmd/
-│   └── main.go
+│   └── main.go # Main entry point
 ├── internal/
-│   ├── config/
-│   ├── storage/
-│   ├── models/
-│   ├── ui/
-│   └── sync/
-├── pkg/
-└── data/
+│   ├── config/ # Configuration Management
+│   ├── models/ # Data Structures
+│   ├── storage/ # Data persistence
+│   ├── sync/ # (stretch) Syncing with Google Sheets
+│   └── ui/ # TUI components
+└── data/ # Data templates
 ```
 
 ---
@@ -29,10 +28,10 @@ finance-tracker/
 ## Phase 1: Foundation & Setup
 
 ### Task 1.1: Project Structure Setup
-- [ ] Set up Go module with proper directory structure
-- [ ] Initialize git repository with appropriate .gitignore
-- [ ] Add Bubbletea and Lipgloss dependencies
-- [ ] Create basic package structure following Go conventions
+- [x] Set up Go module with proper directory structure
+- [x] Initialize git repository with appropriate .gitignore
+- [x] Add Bubbletea and Lipgloss dependencies
+- [x] Create basic package structure following Go conventions
 
 **Dependencies**: None
 

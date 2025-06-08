@@ -20,7 +20,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "ctrl+c", "q":
+		case "ctrl+c", "esc":
 			return m, tea.Quit
 		case "enter":
 			if m.input != "" {
@@ -43,7 +43,7 @@ func (m model) View() string {
 		return fmt.Sprintf("Hello %s!\n\nPress any key to exit...", m.input)
 	}
 
-	return fmt.Sprintf("What's your name?\n\n%s\n\n(Press Enter to continue or 'q' to quit)", m.input)
+	return fmt.Sprintf("What's your name?\n\n%s\n\n(Press Enter to continue or Esc to quit)", m.input)
 }
 
 func main() {
