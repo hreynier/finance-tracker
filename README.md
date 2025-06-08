@@ -23,3 +23,5 @@ go run main.go
 ## Development
 
 This project uses Go modules. Make sure you have Go 1.18+ installed.
+
+A task list is provided in [tasks.md](./docs/tasks.md).
