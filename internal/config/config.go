@@ -1,8 +1,9 @@
 package config
 
 type Config struct {
-	Currency   string   `json:"currency"`
-	DateFormat string   `json:"date_format"`
-	Categories []string `json:"categories"`
-	UserName   string   `json:"user_name"`
+	Currency   string   `yaml:"currency"`
+	DateFormat string   `yaml:"date_format"`
+	Categories []string `yaml:"categories"`
+	UserName   string   `yaml:"user_name"`
+	DataFile   string   `yaml:"data_file"`
 }

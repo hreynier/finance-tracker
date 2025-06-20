@@ -49,10 +49,13 @@ func (m model) View() string {
 }
 
 func main() {
-	cfg := config.Config{}
 	txn := models.Transaction{}
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		fmt.Printf("Error %v", err)
+	}
 
-	fmt.Println("Config: %w", cfg)
+	fmt.Println(cfg.UserName)
 	fmt.Println("Transactions: %w", txn)
 
 	transaction, err := models.NewExpense("25.567", "Coffee At Starbucks", "Food & Drink")
