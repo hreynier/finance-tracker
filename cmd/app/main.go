@@ -50,9 +50,9 @@ func (m model) View() string {
 
 func main() {
 	txn := models.Transaction{}
-	cfg, err := config.LoadConfig()
+	cfg, err := config.GetConfiguration()
 	if err != nil {
-		fmt.Printf("Error %v", err)
+		fmt.Errorf("Failed to get configuration: %w", err)
 	}
 
 	fmt.Println(cfg.UserName)
