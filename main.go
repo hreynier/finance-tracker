@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -9,12 +8,14 @@ import (
 )
 
 func main() {
-	debugFlag := flag.Bool("debug", false, "Enables Debug logging")
-	flag.Parse()
-	debug := *debugFlag
+	// debugFlag := flag.Bool("debug", false, "Enables Debug logging")
+	// flag.Parse()
+	// debug := *debugFlag
 
-	p := tea.NewProgram(InitialiseModel(debug))
-
+	// p := tea.NewProgram(InitialiseModel(debug))
+	//
+	l := NewLedger()
+	p := tea.NewProgram(l)
 	if _, err := p.Run(); err != nil {
 		log.Fatal("Failed to start TUI!", err)
 		os.Exit(1)
