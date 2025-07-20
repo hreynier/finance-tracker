@@ -29,6 +29,7 @@ func (m *Ledger) Init() tea.Cmd {
 
 func (m *Ledger) initLists(width, height int) {
 	defaultList := list.New([]list.Item{}, list.NewDefaultDelegate(), width/2, height)
+	defaultList.SetShowHelp(false)
 
 	m.transactionLists = []list.Model{defaultList, defaultList}
 	// Init Income
