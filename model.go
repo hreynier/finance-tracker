@@ -14,6 +14,7 @@ type Ledger struct {
 	loaded           bool
 	focused          TransactionType
 	transactionLists []list.Model
+	quitting         bool
 }
 
 func NewLedger() *Ledger {
@@ -56,6 +57,12 @@ func (m *Ledger) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.initLists(msg.Width, msg.Height)
 			m.loaded = true
 		}
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "q", "esc":
+			m.quitting = true
+			return m, tea.Quit
+		}
 	}
 	var cmd tea.Cmd
 	m.transactionLists[m.focused], cmd = m.transactionLists[m.focused].Update(msg)
@@ -64,6 +71,9 @@ func (m *Ledger) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *Ledger) View() string {
+	if m.quitting {
+		return ""
+	}
 	if m.loaded {
 		return lipgloss.JoinHorizontal(
 			lipgloss.Left,
