@@ -15,13 +15,14 @@ type Ledger struct {
 	focused          TransactionType
 	transactionLists []list.Model
 	quitting         bool
+	cfg              *Config
 }
 
-func NewLedger() *Ledger {
+func NewLedger(cfg *Config) *Ledger {
 	help := help.New()
 	help.ShowAll = true
 
-	return &Ledger{help: help, focused: TransactionTypeIncome}
+	return &Ledger{help: help, focused: TransactionTypeIncome, cfg: cfg}
 }
 
 func (m *Ledger) Init() tea.Cmd {
