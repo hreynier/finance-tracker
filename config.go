@@ -64,7 +64,7 @@ func DefaultConfig() *Config {
 	return cfg
 }
 
-func ConfigExists() (bool, error) {
+func configExists() (bool, error) {
 	log.Debug("Checking if config file exists")
 	configPath, err := getConfigFilePath()
 	if err != nil {
@@ -87,10 +87,10 @@ func ConfigExists() (bool, error) {
 	return true, nil
 }
 
-func LoadConfig() (*Config, error) {
+func loadConfig() (*Config, error) {
 	log.Debug("Loading configuration from file")
 
-	configExists, err := ConfigExists()
+	configExists, err := configExists()
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +134,7 @@ func GetConfiguration() (*Config, error) {
 
 	// Try to load config from file
 	log.Debug("Attempting to load config from file")
-	loadedConfig, err := LoadConfig()
+	loadedConfig, err := loadConfig()
 	if err != nil {
 		log.Error("Failed to load config from file", "err", err)
 		return nil, err
@@ -163,7 +163,7 @@ func getHomeDir() (string, error) {
 	return userHomeDir, nil
 }
 
-func getConfigDir() (string, error) {
+func GetConfigDir() (string, error) {
 	log.Debug("Getting config directory path")
 	userHomeDir, err := getHomeDir()
 	if err != nil {
@@ -177,7 +177,7 @@ func getConfigDir() (string, error) {
 
 func getConfigFilePath() (string, error) {
 	log.Debug("Getting config file path")
-	configDir, err := getConfigDir()
+	configDir, err := GetConfigDir()
 	if err != nil {
 		return "", err
 	}
@@ -233,7 +233,7 @@ func buildConfig(cfg *Config, loadedConfig *Config) *Config {
 		cfg.DateFormat = loadedConfig.DateFormat
 	}
 
-	if loadedConfig.Categories != nil && len(loadedConfig.Categories) > 0 {
+	if len(loadedConfig.Categories) > 0 {
 		log.Debug("Overriding categories", "from_count", len(cfg.Categories), "to_count", len(loadedConfig.Categories))
 		cfg.Categories = loadedConfig.Categories
 	}
