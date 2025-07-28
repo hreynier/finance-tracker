@@ -25,12 +25,28 @@ func NewLedger(cfg *Config) *Ledger {
 	return &Ledger{help: help, focused: TransactionTypeIncome, cfg: cfg}
 }
 
+func (l *Ledger) Next() {
+	if l.focused == TransactionTypeExpense {
+		l.focused = TransactionTypeIncome
+	} else {
+		l.focused++
+	}
+}
+
+func (l *Ledger) Prev() {
+	if l.focused == TransactionTypeIncome {
+		l.focused = TransactionTypeExpense
+	} else {
+		l.focused--
+	}
+}
+
 func (m *Ledger) Init() tea.Cmd {
 	return nil
 }
 
 func (m *Ledger) initLists(width, height int) {
-	defaultList := list.New([]list.Item{}, list.NewDefaultDelegate(), width/2, height)
+	defaultList := list.New([]list.Item{}, list.NewDefaultDelegate(), width/divisor, height/2)
 	defaultList.SetShowHelp(false)
 
 	m.transactionLists = []list.Model{defaultList, defaultList}
@@ -55,6 +71,10 @@ func (m *Ledger) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		if !m.loaded {
+			focusedStyle.Width(msg.Width / divisor)
+			unfocusedStyle.Width(msg.Width / divisor)
+			focusedStyle.Height(msg.Height - divisor)
+			unfocusedStyle.Height(msg.Height - divisor)
 			m.initLists(msg.Width, msg.Height)
 			m.loaded = true
 		}
@@ -63,6 +83,10 @@ func (m *Ledger) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q", "esc":
 			m.quitting = true
 			return m, tea.Quit
+		case "right", "l", "tab":
+			m.Next()
+		case "left", "h", "shift+tab":
+			m.Prev()
 		}
 	}
 	var cmd tea.Cmd
@@ -76,11 +100,23 @@ func (m *Ledger) View() string {
 		return ""
 	}
 	if m.loaded {
-		return lipgloss.JoinHorizontal(
-			lipgloss.Left,
-			m.transactionLists[TransactionTypeIncome].View(),
-			m.transactionLists[TransactionTypeExpense].View(),
-		)
+		incomeView := m.transactionLists[TransactionTypeIncome].View()
+		expenseView := m.transactionLists[TransactionTypeExpense].View()
+
+		switch m.focused {
+		default:
+			return lipgloss.JoinHorizontal(
+				lipgloss.Left,
+				focusedStyle.Render(incomeView),
+				unfocusedStyle.Render(expenseView),
+			)
+		case TransactionTypeExpense:
+			return lipgloss.JoinHorizontal(
+				lipgloss.Left,
+				unfocusedStyle.Render(incomeView),
+				focusedStyle.Render(expenseView),
+			)
+		}
 	} else {
 		return "Loading..."
 	}
